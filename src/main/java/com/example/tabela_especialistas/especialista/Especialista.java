@@ -22,9 +22,9 @@ import java.util.UUID;
 public class Especialista {
 
 
-
-    @Id @GeneratedValue
-    @Column(name = "usuario_id", columnDefinition = "BINARY(16)")
+    // atualizei essa parte, pois Generate com UUID já gerado, pode dá erro no código.
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID usuario_id;
 //    private String nomeCompleto;
     private String crm;
