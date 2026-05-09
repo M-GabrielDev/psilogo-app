@@ -1,8 +1,8 @@
 package com.example.tabela_usuarios.tipoConta;
 
 public enum StatusConta {
-    PENDENTE,
-    ATIVO,
-    SUSPENSO,
-    BANIDO;
+    pendente,
+    ativo,
+    suspenso,
+    banido;
 }

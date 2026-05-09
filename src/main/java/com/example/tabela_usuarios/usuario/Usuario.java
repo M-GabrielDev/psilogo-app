@@ -47,8 +47,8 @@ public class Usuario {
         this.senha = dados.senha();
         this.telefone = dados.telefone();
         this.fotoPerfil = dados.fotoPerfil();
-        this.tipo = TipoUsuario.PACIENTE;
-        this.status = StatusConta.PENDENTE;
+        this.tipo = TipoUsuario.paciente;
+        this.status = StatusConta.pendente;
         this.criadoEm = LocalDateTime.now();
         this.atualizadoEm = LocalDateTime.now();
 

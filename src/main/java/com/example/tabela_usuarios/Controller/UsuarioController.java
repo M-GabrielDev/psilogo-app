@@ -6,12 +6,11 @@ import com.example.tabela_usuarios.usuario.Usuario;
 import com.example.tabela_usuarios.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@SpringBootApplication
+import java.util.List;
+
+
 @RestController
 @RequestMapping("cadastros")
 public class UsuarioController {
@@ -22,6 +21,11 @@ public class UsuarioController {
     @PostMapping
     public void cadastro(@RequestBody DadosCadastroUsuario dados) {
         repository.save(new Usuario(dados));
+    }
+
+    @GetMapping
+    public List<Usuario> listar() {
+        return repository.findAll();
     }
 
 }
