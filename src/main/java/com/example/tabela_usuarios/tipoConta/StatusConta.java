@@ -1,4 +1,4 @@
-package com.example.psilogo_app.tipoConta;
+package com.example.tabela_usuarios.tipoConta;
 
 public enum StatusConta {
     PENDENTE,

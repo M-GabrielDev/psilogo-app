@@ -1,4 +1,4 @@
-package com.example.psilogo_app;
+package com.example.tabela_usuarios;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
