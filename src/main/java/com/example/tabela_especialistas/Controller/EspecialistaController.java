@@ -18,3 +18,4 @@ public class EspecialistaController {
         return repository.findAll();
     }
 }
+// O controle dos especialistas estar completo.
