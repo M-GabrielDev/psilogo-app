@@ -1,9 +1,9 @@
 package com.example.entity;
 
 import com.example.DTO.DadosCadastroChat;
+import com.example.converter.UUIDConverter;
 import com.example.enums.PrioridadeChat;
 import com.example.enums.StatusChat;
-import com.example.enums.TipoChat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,12 +25,13 @@ public class Chat {
     @Convert(converter = UUIDConverter.class)
     private UUID id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('direto','grupo','suporte_emergencial')")
-    private TipoChat tipo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
-    @Column(name = "is_anonymous")
-    private Boolean isAnonymous;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "especialista_id", nullable = false)
+    private Especialista especialista;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('aberto','em_atendimento','encerrado')")
@@ -40,8 +41,8 @@ public class Chat {
     @Column(columnDefinition = "ENUM('baixa','media','alta','urgente')")
     private PrioridadeChat prioridade;
 
-    @Column(name = "criado_em")
-    private LocalDateTime criadoEm;
+    @Column(name = "entrou_em")
+    private LocalDateTime entrouEm;
 
     @Column(name = "encerrado_em")
     private LocalDateTime encerradoEm;
@@ -49,17 +50,22 @@ public class Chat {
     @PrePersist
     protected void onCreate() {
         if (id == null) id = UUID.randomUUID();
-        if (criadoEm == null) criadoEm = LocalDateTime.now();
-        if (isAnonymous == null) isAnonymous = true;
+        if (entrouEm == null) entrouEm = LocalDateTime.now();
         if (status == null) status = StatusChat.aberto;
-        if (tipo == null) tipo = TipoChat.direto;
         if (prioridade == null) prioridade = PrioridadeChat.media;
     }
 
-    public Chat(DadosCadastroChat dados) {
-        this.tipo       = dados.tipo() != null ? dados.tipo() : TipoChat.direto;
-        this.isAnonymous = dados.isAnonymous() != null ? dados.isAnonymous() : true;
-        this.prioridade = dados.prioridade() != null ? dados.prioridade() : PrioridadeChat.media;
-        this.status     = StatusChat.aberto;
+    public Chat(DadosCadastroChat dados, Usuario usuario, Especialista especialista) {
+        this.usuario      = usuario;
+        this.especialista = especialista;
+        this.prioridade   = dados.prioridade() != null ? dados.prioridade() : PrioridadeChat.media;
+        this.status       = StatusChat.aberto;
+    }
+
+    public void encerrar() {
+        this.status     = StatusChat.encerrado;
+        this.encerradoEm = LocalDateTime.now();
     }
 }
+
+

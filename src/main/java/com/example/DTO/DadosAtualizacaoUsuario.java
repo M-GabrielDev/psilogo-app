@@ -1,12 +1,10 @@
 package com.example.DTO;
 
-public record DadosCadastroUsuario(
+public record DadosAtualizacaoUsuario(
         String nomeCompleto,
         String anonimo,
-        String email,
-        String senha,
         String telefone,
         String fotoPerfil,
-        String imagemAvatar) {
-
+        String imagemAvatar
+) {
 }

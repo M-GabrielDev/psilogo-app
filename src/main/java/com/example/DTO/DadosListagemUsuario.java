@@ -1,0 +1,34 @@
+package com.example.DTO;
+
+import com.example.entity.Usuario;
+import com.example.enums.StatusConta;
+import com.example.enums.TipoUsuario;
+import java.util.UUID;
+
+public record DadosListagemUsuario(
+
+        UUID id,
+        String nomeCompleto,
+        String anonimo,
+        String email,
+        String telefone,
+        String fotoPerfil,
+        String imagemAvatar,
+        TipoUsuario tipo,
+        StatusConta status
+
+) {
+    public DadosListagemUsuario(Usuario u) {
+        this(
+                u.getId(),
+                u.getNomeCompleto(),
+                u.getAnonimo(),
+                u.getEmail(),
+                u.getTelefone(),
+                u.getFotoPerfil(),
+                u.getImagemAvatar(),
+                u.getTipo(),
+                u.getStatus()
+        );
+    }
+}

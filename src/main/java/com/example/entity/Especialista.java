@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.example.DTO.DadosAtualizacaoEspecialista;
 import com.example.DTO.DadosCadastroEspecialista;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
@@ -22,12 +23,12 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "usuario_id")
 public class Especialista {
 
-
-    // atualizei essa parte, pois Generate com UUID já gerado, pode dá erro no código.
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID usuario_id;
     private String nomeCompleto;
+    private String nome;          // ← novo campo
+    private String credenciais;   // ← novo campo
     private String crm;
     private String especialidade;
 
@@ -42,15 +43,22 @@ public class Especialista {
     @Column(name = "nota_media", precision = 3, scale = 2)
     private BigDecimal notaMedia = BigDecimal.valueOf(5.0);
 
-    public Especialista(DadosCadastroEspecialista dados){
+    public Especialista(DadosCadastroEspecialista dados) {
         this.nomeCompleto = dados.nomeCompleto();
-        this.crm = dados.crm();
+        this.nome         = dados.nome();          // ← novo campo
+        this.credenciais  = dados.credenciais();   // ← novo campo
+        this.crm          = dados.crm();
         this.especialidade = dados.especialidade();
-        this.biografia = dados.biografia();
-        this.disponivel = dados.disponivel();
-        this.notaMedia = BigDecimal.valueOf(5.0);
-
+        this.biografia    = dados.biografia();
+        this.disponivel   = dados.disponivel();
+        this.notaMedia    = BigDecimal.valueOf(5.0);
     }
 
-
+    public void atualizar(DadosAtualizacaoEspecialista dados) {
+        if (dados.nome() != null)         this.nome         = dados.nome();
+        if (dados.especialidade() != null) this.especialidade = dados.especialidade();
+        if (dados.biografia() != null)    this.biografia    = dados.biografia();
+        if (dados.credenciais() != null)  this.credenciais  = dados.credenciais();
+        if (dados.disponivel() != null)   this.disponivel   = dados.disponivel();
+    }
 }

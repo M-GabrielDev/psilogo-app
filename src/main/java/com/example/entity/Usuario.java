@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.example.DTO.DadosAtualizacaoUsuario;
 import com.example.DTO.DadosCadastroUsuario;
 import com.example.enums.StatusConta;
 import com.example.enums.TipoUsuario;
@@ -23,13 +24,14 @@ public class Usuario {
     @Id @GeneratedValue
     private UUID id;
     private String nomeCompleto;
-    private String apelidoAnonimo;
+    private String anonimo;
     private String email;
 
     @Column(name = "senha_hash", nullable = false, length = 255)
     private String senha;
     private String telefone;
     private String fotoPerfil;
+    private String imagemAvatar;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -49,17 +51,22 @@ public class Usuario {
 
     public Usuario(DadosCadastroUsuario dados) {
         this.nomeCompleto = dados.nomeCompleto();
-        this.apelidoAnonimo = dados.apelidoAnonimo();
-        this.email = dados.email();
-        this.senha = dados.senha();
-        this.telefone = dados.telefone();
-        this.fotoPerfil = dados.fotoPerfil();
-        this.tipo = TipoUsuario.paciente;
-        this.status = StatusConta.pendente;
-        this.criadoEm = LocalDateTime.now();
+        this.anonimo      = dados.anonimo();
+        this.email        = dados.email();
+        this.senha        = dados.senha();
+        this.telefone     = dados.telefone();
+        this.fotoPerfil   = dados.fotoPerfil();
+        this.imagemAvatar = dados.imagemAvatar();
+        this.tipo         = TipoUsuario.paciente;
+        this.status       = StatusConta.pendente;
+        this.criadoEm     = LocalDateTime.now();
         this.atualizadoEm = LocalDateTime.now();
-
-
-
+    }
+    public void atualizar(DadosAtualizacaoUsuario dados) {
+        if (dados.nomeCompleto() != null)  this.nomeCompleto  = dados.nomeCompleto();
+        if (dados.anonimo() != null)       this.anonimo       = dados.anonimo();
+        if (dados.telefone() != null)      this.telefone      = dados.telefone();
+        if (dados.fotoPerfil() != null)    this.fotoPerfil    = dados.fotoPerfil();
+        if (dados.imagemAvatar() != null)  this.imagemAvatar  = dados.imagemAvatar();
     }
 }

@@ -1,12 +1,12 @@
 package com.example.DTO;
 
 import com.example.enums.PrioridadeChat;
-import com.example.enums.TipoChat;
+import java.util.UUID;
 
 public record DadosCadastroChat(
-    TipoChat tipo,
-    Boolean isAnonymous,
-    PrioridadeChat prioridade
+        UUID usuarioId,
+        UUID especialistaId,
+        PrioridadeChat prioridade
     ){
 
 }
