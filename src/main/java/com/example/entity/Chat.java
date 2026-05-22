@@ -21,8 +21,8 @@ import java.util.UUID;
 public class Chat {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    @Convert(converter = UUIDConverter.class)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)

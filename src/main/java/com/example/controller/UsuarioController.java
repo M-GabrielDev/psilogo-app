@@ -29,7 +29,7 @@ public class UsuarioController {
     public ResponseEntity<DadosListagemUsuario> cadastrar(
             @RequestBody @Valid DadosCadastroUsuario dados) {
 
-        if (repository.emailExistente(dados.email())) {
+        if (repository.existsByEmail(dados.email())) {
             throw new EmailJaCadastradoException();
         }
 
