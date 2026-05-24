@@ -2,12 +2,10 @@ package com.example.DTO;
 
 import com.example.enums.TipoConteudo;
 
-public record DadosCadastroConteudoEducativo(
+public record DadosAtualizacaoConteudo(
         String titulo,
         String descricao,
-        TipoConteudo tipo,
+        Boolean publicados,
         String urlArquivo,
-        Integer duracaoMinutos,
-        Boolean publicado
-) {
-}
+        TipoConteudo tipo
+) {}

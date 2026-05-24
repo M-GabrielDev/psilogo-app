@@ -5,32 +5,43 @@ import com.example.DTO.DadosCadastroUsuario;
 import com.example.enums.StatusConta;
 import com.example.enums.TipoUsuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import lombok.*;
 
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "Usuario")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Usuario {
 
-    @Id @GeneratedValue
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "nome", nullable = false, length = 100)
     private String nomeCompleto;
+
+    @Column(name = "_anonimo")
     private String anonimo;
+
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "senha_hash", nullable = false, length = 255)
+
+    @Column(name = "senha", nullable = false, length = 255)
     private String senha;
+
+    @Column(length = 15)
     private String telefone;
+
+    @Column(name = "foto_perfil", length = 255)
     private String fotoPerfil;
+
+    @Column(name = "imagem_avatar", length = 255)
     private String imagemAvatar;
 
     @Enumerated(EnumType.STRING)
@@ -40,14 +51,12 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(20) DEFAULT 'pendente'")
     private StatusConta status;
-    private LocalDateTime emailVerificadoEm;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
 
-    @PrePersist
-    protected void onCreate() {
-        if (id == null) id = UUID.randomUUID();
-    }
+    @Column(name = "idAutenticacao_Token")
+    private Integer idAutenticacaoToken;
+
+    @Column(name = "idChat")
+    private Integer idChat;
 
     public Usuario(DadosCadastroUsuario dados) {
         this.nomeCompleto = dados.nomeCompleto();
@@ -57,11 +66,10 @@ public class Usuario {
         this.telefone     = dados.telefone();
         this.fotoPerfil   = dados.fotoPerfil();
         this.imagemAvatar = dados.imagemAvatar();
-        this.tipo         = TipoUsuario.paciente;
+        this.tipo         = TipoUsuario.usuario;
         this.status       = StatusConta.pendente;
-        this.criadoEm     = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
     }
+
     public void atualizar(DadosAtualizacaoUsuario dados) {
         if (dados.nomeCompleto() != null)  this.nomeCompleto  = dados.nomeCompleto();
         if (dados.anonimo() != null)       this.anonimo       = dados.anonimo();

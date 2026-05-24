@@ -1,9 +1,8 @@
 package com.example.controller;
 
-import com.example.DTO.DadosAtualizacaoUsuario;
-import com.example.DTO.DadosCadastroUsuario;
-import com.example.DTO.DadosListagemUsuario;
-import com.example.service.UsuarioService;
+import com.example.DTO.DadosCadastroToken;
+import com.example.DTO.DadosListagemToken;
+import com.example.service.AutenticacaoTokenService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,37 +10,34 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/cadastros")
+@RequestMapping("/tokens")
 @RequiredArgsConstructor
-public class UsuarioController {
+public class AutenticacaoTokenController {
 
-    private final UsuarioService service;
+    private final AutenticacaoTokenService service;
 
     @PostMapping
-    public ResponseEntity<DadosListagemUsuario> cadastrar(
-            @RequestBody @Valid DadosCadastroUsuario dados) {
+    public ResponseEntity<DadosListagemToken> cadastrar(
+            @RequestBody @Valid DadosCadastroToken dados) {
         return ResponseEntity.ok(service.cadastrar(dados));
     }
 
     @GetMapping
-    public Page<DadosListagemUsuario> listar(Pageable pageable) {
+    public Page<DadosListagemToken> listar(Pageable pageable) {
         return service.listar(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DadosListagemUsuario> buscarPorId(
+    public ResponseEntity<DadosListagemToken> buscarPorId(
             @PathVariable Integer id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DadosListagemUsuario> atualizar(
-            @PathVariable Integer id,
-            @RequestBody @Valid DadosAtualizacaoUsuario dados) {
-        return ResponseEntity.ok(service.atualizar(id, dados));
+    @PutMapping("/{id}/usar")
+    public ResponseEntity<Void> marcarComoUsado(@PathVariable Integer id) {
+        service.marcarComoUsado(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

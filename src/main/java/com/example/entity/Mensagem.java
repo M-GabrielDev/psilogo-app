@@ -7,10 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "mensagens")
+@Table(name = "Mensagem")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,17 +19,13 @@ public class Mensagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_id", nullable = false)
-    private Chat chat;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "remetente_id", nullable = false)
     private Usuario autor;
 
-    @Column(name = "conteudo_texto", columnDefinition = "TEXT")
+    @Column(name = "conteudo_texto", columnDefinition = "VARCHAR(5000)")
     private String conteudoTexto;
 
     @Enumerated(EnumType.STRING)
@@ -38,17 +34,17 @@ public class Mensagem {
     private TipoMidia tipoMidia;
 
     @Column(name = "enviada_em")
-    private LocalDateTime enviadaEm;
+    private LocalTime enviadaEm;
 
     @Column(name = "ultima_leitura")
-    private LocalDateTime ultimaLeitura;   // ← novo
+    private LocalTime ultimaLeitura;
 
-    @Column(name = "excluida")
-    private Boolean excluida = false;      // ← novo
+    @Column(name = "excluida", nullable = false)
+    private Boolean excluida = false;
 
     @PrePersist
     protected void onCreate() {
-        if (enviadaEm == null) enviadaEm = LocalDateTime.now();
+        if (enviadaEm == null) enviadaEm = LocalTime.now();
         if (tipoMidia == null) tipoMidia = TipoMidia.texto;
         if (excluida == null) excluida = false;
     }
@@ -57,8 +53,7 @@ public class Mensagem {
         this.excluida = true;
     }
 
-    public Mensagem(DadosCadastroMensagem dados, Chat chat, Usuario autor) {
-        this.chat          = chat;
+    public Mensagem(DadosCadastroMensagem dados, Usuario autor) {
         this.autor         = autor;
         this.conteudoTexto = dados.conteudoTexto();
         this.tipoMidia     = dados.tipoMidia() != null ? dados.tipoMidia() : TipoMidia.texto;

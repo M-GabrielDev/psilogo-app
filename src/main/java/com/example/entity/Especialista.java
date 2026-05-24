@@ -3,6 +3,7 @@ package com.example.entity;
 import com.example.DTO.DadosAtualizacaoEspecialista;
 import com.example.DTO.DadosCadastroEspecialista;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
@@ -11,31 +12,42 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
-@Table(name = "especialistas")
+@Table(name = "Especialidades")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "usuario_id")
+@EqualsAndHashCode(of = "id")
 public class Especialista {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID usuario_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario usuario;
+
+    @Column(name = "nome", nullable = false, length = 100)
     private String nomeCompleto;
-    private String nome;          // ← novo campo
-    private String credenciais;   // ← novo campo
+
+    @Column(length = 255)
+    private String credenciais;
+
+    @Column(name = "codigo_crp", length = 20)
     private String crm;
+
+    @Column(length = 100)
     private String especialidade;
 
-    @Size(max = 2000, message = "Biografia muito longa")
-    @Column(columnDefinition = "TEXT")
+    @Size(max = 1000, message = "Biografia muito longa")
+    @Column(columnDefinition = "VARCHAR(1000)")
     private String biografia;
-    private Boolean disponivel;
+
+    @Column(nullable = false)
+    private Boolean disponivel = true;
 
     @DecimalMin(value = "0.0", message = "Nota não pode ser negativa")
     @DecimalMax(value = "5.0", message = "Nota não pode ser maior que 5")
@@ -43,10 +55,10 @@ public class Especialista {
     @Column(name = "nota_media", precision = 3, scale = 2)
     private BigDecimal notaMedia = BigDecimal.valueOf(5.0);
 
-    public Especialista(DadosCadastroEspecialista dados) {
+    public Especialista(DadosCadastroEspecialista dados, Usuario usuario) {
+        this.usuario      = usuario;
         this.nomeCompleto = dados.nomeCompleto();
-        this.nome         = dados.nome();          // ← novo campo
-        this.credenciais  = dados.credenciais();   // ← novo campo
+        this.credenciais  = dados.credenciais();
         this.crm          = dados.crm();
         this.especialidade = dados.especialidade();
         this.biografia    = dados.biografia();
@@ -54,11 +66,13 @@ public class Especialista {
         this.notaMedia    = BigDecimal.valueOf(5.0);
     }
 
+    public Especialista(@Valid DadosCadastroEspecialista dados) {
+    }
+
     public void atualizar(DadosAtualizacaoEspecialista dados) {
-        if (dados.nome() != null)         this.nome         = dados.nome();
         if (dados.especialidade() != null) this.especialidade = dados.especialidade();
-        if (dados.biografia() != null)    this.biografia    = dados.biografia();
-        if (dados.credenciais() != null)  this.credenciais  = dados.credenciais();
-        if (dados.disponivel() != null)   this.disponivel   = dados.disponivel();
+        if (dados.biografia() != null)     this.biografia     = dados.biografia();
+        if (dados.credenciais() != null)   this.credenciais   = dados.credenciais();
+        if (dados.disponivel() != null)    this.disponivel    = dados.disponivel();
     }
 }

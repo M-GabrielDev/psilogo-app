@@ -1,16 +1,15 @@
 package com.example.DTO;
 
-import com.example.entity.Especialista;
+import com.example.enums.PrioridadeChat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
-public record DadosCadastroEspecialista(UUID usuario_id,
-                                        String nomeCompleto,
-                                        String nome,
-                                        String credenciais,
-                                        String crm,
-                                        String especialidade,
-                                        String biografia,
-                                        Boolean disponivel,
-                                        BigDecimal notaMedia) { }
+public record DadosCadastroEspecialista(
+        @NotNull Integer usuarioId,
+        @NotBlank String nomeCompleto,
+        String credenciais,
+        @NotBlank String crm,
+        @NotBlank String especialidade,
+        String biografia,
+        @NotNull Boolean disponivel
+) {}

@@ -3,11 +3,9 @@ package com.example.DTO;
 import com.example.entity.Usuario;
 import com.example.enums.StatusConta;
 import com.example.enums.TipoUsuario;
-import java.util.UUID;
 
 public record DadosListagemUsuario(
-
-        UUID id,
+        Integer id,
         String nomeCompleto,
         String anonimo,
         String email,
@@ -16,7 +14,6 @@ public record DadosListagemUsuario(
         String imagemAvatar,
         TipoUsuario tipo,
         StatusConta status
-
 ) {
     public DadosListagemUsuario(Usuario u) {
         this(

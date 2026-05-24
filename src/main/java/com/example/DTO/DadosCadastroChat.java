@@ -1,12 +1,10 @@
 package com.example.DTO;
 
 import com.example.enums.PrioridadeChat;
-import java.util.UUID;
+import jakarta.validation.constraints.NotNull;
 
 public record DadosCadastroChat(
-        UUID usuarioId,
-        UUID especialistaId,
+        @NotNull Integer usuarioId,
+        @NotNull Integer especialistaId,
         PrioridadeChat prioridade
-    ){
-
-}
+) {}

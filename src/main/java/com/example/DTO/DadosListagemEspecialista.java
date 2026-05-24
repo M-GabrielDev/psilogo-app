@@ -2,12 +2,10 @@ package com.example.DTO;
 
 import com.example.entity.Especialista;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public record DadosListagemEspecialista(
-
-        UUID usuarioId,
-        String nome,
+        Integer id,
+        Integer usuarioId,
         String nomeCompleto,
         String crm,
         String especialidade,
@@ -15,12 +13,11 @@ public record DadosListagemEspecialista(
         String credenciais,
         Boolean disponivel,
         BigDecimal notaMedia
-
 ) {
     public DadosListagemEspecialista(Especialista e) {
         this(
-                e.getUsuario_id(),
-                e.getNome(),
+                e.getId(),
+                e.getUsuario().getId(),
                 e.getNomeCompleto(),
                 e.getCrm(),
                 e.getEspecialidade(),

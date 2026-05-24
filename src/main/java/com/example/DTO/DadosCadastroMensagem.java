@@ -1,13 +1,12 @@
 package com.example.DTO;
 
 import com.example.enums.TipoMidia;
-import java.util.UUID;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public record DadosCadastroMensagem(
-
-        UUID chatId,
-        UUID autorId,
-        String conteudoTexto,
+        @NotNull Integer autorId,
+        @NotBlank @Size(max = 5000) String conteudoTexto,
         TipoMidia tipoMidia
-
 ) {}

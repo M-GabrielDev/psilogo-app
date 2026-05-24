@@ -3,24 +3,22 @@ package com.example.DTO;
 import com.example.entity.Chat;
 import com.example.enums.PrioridadeChat;
 import com.example.enums.StatusChat;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.time.LocalTime;
 
 public record DadosListagemChat(
-        UUID id,
-        UUID usuarioId,
-        UUID especialistaId,
+        Integer id,
+        Integer usuarioId,
+        Integer especialistaId,
         StatusChat status,
         PrioridadeChat prioridade,
-        LocalDateTime entrouEm,
-        LocalDateTime encerradoEm
+        LocalTime entrouEm,
+        LocalTime encerradoEm
 ) {
     public DadosListagemChat(Chat chat) {
         this(
                 chat.getId(),
                 chat.getUsuario().getId(),
-                chat.getEspecialista().getUsuario_id(),
+                chat.getEspecialista().getId(),
                 chat.getStatus(),
                 chat.getPrioridade(),
                 chat.getEntrouEm(),

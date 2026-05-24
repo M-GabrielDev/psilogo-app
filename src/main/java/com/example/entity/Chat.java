@@ -1,7 +1,6 @@
 package com.example.entity;
 
 import com.example.DTO.DadosCadastroChat;
-import com.example.converter.UUIDConverter;
 import com.example.enums.PrioridadeChat;
 import com.example.enums.StatusChat;
 import jakarta.persistence.*;
@@ -9,11 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "chats")
+@Table(name = "Chat")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,9 +19,8 @@ import java.util.UUID;
 public class Chat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -42,15 +39,14 @@ public class Chat {
     private PrioridadeChat prioridade;
 
     @Column(name = "entrou_em")
-    private LocalDateTime entrouEm;
+    private LocalTime entrouEm;
 
     @Column(name = "encerrado_em")
-    private LocalDateTime encerradoEm;
+    private LocalTime encerradoEm;
 
     @PrePersist
     protected void onCreate() {
-        if (id == null) id = UUID.randomUUID();
-        if (entrouEm == null) entrouEm = LocalDateTime.now();
+        if (entrouEm == null) entrouEm = LocalTime.now();
         if (status == null) status = StatusChat.aberto;
         if (prioridade == null) prioridade = PrioridadeChat.media;
     }
@@ -63,8 +59,8 @@ public class Chat {
     }
 
     public void encerrar() {
-        this.status     = StatusChat.encerrado;
-        this.encerradoEm = LocalDateTime.now();
+        this.status      = StatusChat.encerrado;
+        this.encerradoEm = LocalTime.now();
     }
 }
 
