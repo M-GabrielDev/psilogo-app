@@ -1,5 +1,6 @@
 package com.example.DTO;
 
+import com.example.enums.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,5 +13,6 @@ public record DadosCadastroUsuario(
         @NotBlank @Size(min = 8) String senha,
         @Pattern(regexp = "\\d{10,11}") String telefone,
         String fotoPerfil,
-        String imagemAvatar
+        String imagemAvatar,
+        TipoUsuario tipo
 ) {}

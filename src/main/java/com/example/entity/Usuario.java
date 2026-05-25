@@ -10,7 +10,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuario")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -52,10 +52,10 @@ public class Usuario {
     @Column(columnDefinition = "VARCHAR(20) DEFAULT 'pendente'")
     private StatusConta status;
 
-    @Column(name = "idAutenticacao_Token")
+    @Column(name = "idautenticacao_token")
     private Integer idAutenticacaoToken;
 
-    @Column(name = "idChat")
+    @Column(name = "idchat")
     private Integer idChat;
 
     public Usuario(DadosCadastroUsuario dados) {
@@ -66,7 +66,7 @@ public class Usuario {
         this.telefone     = dados.telefone();
         this.fotoPerfil   = dados.fotoPerfil();
         this.imagemAvatar = dados.imagemAvatar();
-        this.tipo         = TipoUsuario.usuario;
+        this.tipo = dados.tipo() != null ? dados.tipo() : TipoUsuario.usuario;
         this.status       = StatusConta.pendente;
     }
 
