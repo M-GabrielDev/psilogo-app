@@ -25,6 +25,10 @@ public class Mensagem {
     @JoinColumn(name = "remetente_id", nullable = false)
     private Usuario autor;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id", nullable = false)
+    private Chat chat;
+
     @Column(name = "conteudo_texto", columnDefinition = "VARCHAR(5000)")
     private String conteudoTexto;
 
@@ -53,8 +57,9 @@ public class Mensagem {
         this.excluida = true;
     }
 
-    public Mensagem(DadosCadastroMensagem dados, Usuario autor) {
+    public Mensagem(DadosCadastroMensagem dados, Usuario autor, Chat chat) {
         this.autor         = autor;
+        this.chat          = chat;
         this.conteudoTexto = dados.conteudoTexto();
         this.tipoMidia     = dados.tipoMidia() != null ? dados.tipoMidia() : TipoMidia.texto;
     }

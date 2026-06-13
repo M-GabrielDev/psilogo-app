@@ -7,8 +7,6 @@ import com.example.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "usuario")
 @Getter
@@ -31,12 +29,8 @@ public class Usuario {
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-
     @Column(name = "senha", nullable = false, length = 255)
     private String senha;
-
-    @Column(length = 15)
-    private String telefone;
 
     @Column(name = "foto_perfil", length = 255)
     private String fotoPerfil;
@@ -52,28 +46,20 @@ public class Usuario {
     @Column(columnDefinition = "VARCHAR(20) DEFAULT 'pendente'")
     private StatusConta status;
 
-    @Column(name = "idautenticacao_token")
-    private Integer idAutenticacaoToken;
-
-    @Column(name = "idchat")
-    private Integer idChat;
-
     public Usuario(DadosCadastroUsuario dados) {
         this.nomeCompleto = dados.nomeCompleto();
         this.anonimo      = dados.anonimo();
         this.email        = dados.email();
         this.senha        = dados.senha();
-        this.telefone     = dados.telefone();
         this.fotoPerfil   = dados.fotoPerfil();
         this.imagemAvatar = dados.imagemAvatar();
-        this.tipo = dados.tipo() != null ? dados.tipo() : TipoUsuario.usuario;
+        this.tipo         = dados.tipo() != null ? dados.tipo() : TipoUsuario.usuario;
         this.status       = StatusConta.pendente;
     }
 
     public void atualizar(DadosAtualizacaoUsuario dados) {
         if (dados.nomeCompleto() != null)  this.nomeCompleto  = dados.nomeCompleto();
         if (dados.anonimo() != null)       this.anonimo       = dados.anonimo();
-        if (dados.telefone() != null)      this.telefone      = dados.telefone();
         if (dados.fotoPerfil() != null)    this.fotoPerfil    = dados.fotoPerfil();
         if (dados.imagemAvatar() != null)  this.imagemAvatar  = dados.imagemAvatar();
     }

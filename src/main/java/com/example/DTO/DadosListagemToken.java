@@ -1,14 +1,15 @@
 package com.example.DTO;
 
 import com.example.entity.AutenticacaoToken;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 public record DadosListagemToken(
         Integer id,
         Integer tipo,
         String token,
-        LocalDateTime expiraEm,
-        LocalDateTime usadoEm,
+        LocalTime expiraEm,
+        LocalDate usadoEm,
         Integer usuarioId
 ) {
     public DadosListagemToken(AutenticacaoToken t) {

@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "chat")
@@ -39,14 +39,14 @@ public class Chat {
     private PrioridadeChat prioridade;
 
     @Column(name = "entrou_em")
-    private LocalTime entrouEm;
+    private LocalDate entrouEm;
 
     @Column(name = "encerrado_em")
-    private LocalTime encerradoEm;
+    private LocalDate encerradoEm;
 
     @PrePersist
     protected void onCreate() {
-        if (entrouEm == null) entrouEm = LocalTime.now();
+        if (entrouEm == null) entrouEm = LocalDate.now();
         if (status == null) status = StatusChat.aberto;
         if (prioridade == null) prioridade = PrioridadeChat.media;
     }
@@ -60,7 +60,7 @@ public class Chat {
 
     public void encerrar() {
         this.status      = StatusChat.encerrado;
-        this.encerradoEm = LocalTime.now();
+        this.encerradoEm = LocalDate.now();
     }
 }
 

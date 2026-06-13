@@ -3,7 +3,6 @@ package com.example.entity;
 import com.example.DTO.DadosAtualizacaoEspecialista;
 import com.example.DTO.DadosCadastroEspecialista;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
@@ -27,7 +26,7 @@ public class Especialista {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
     @Column(name = "nome", nullable = false, length = 100)
@@ -56,17 +55,14 @@ public class Especialista {
     private BigDecimal notaMedia = BigDecimal.valueOf(5.0);
 
     public Especialista(DadosCadastroEspecialista dados, Usuario usuario) {
-        this.usuario      = usuario;
-        this.nomeCompleto = dados.nomeCompleto();
-        this.credenciais  = dados.credenciais();
-        this.crm          = dados.crm();
+        this.usuario       = usuario;
+        this.nomeCompleto  = dados.nomeCompleto();
+        this.credenciais   = dados.credenciais();
+        this.crm           = dados.crm();
         this.especialidade = dados.especialidade();
-        this.biografia    = dados.biografia();
-        this.disponivel   = dados.disponivel();
-        this.notaMedia    = BigDecimal.valueOf(5.0);
-    }
-
-    public Especialista(@Valid DadosCadastroEspecialista dados) {
+        this.biografia     = dados.biografia();
+        this.disponivel    = dados.disponivel();
+        this.notaMedia     = BigDecimal.valueOf(5.0);
     }
 
     public void atualizar(DadosAtualizacaoEspecialista dados) {

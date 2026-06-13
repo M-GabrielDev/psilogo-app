@@ -3,7 +3,7 @@ package com.example.DTO;
 import com.example.entity.Chat;
 import com.example.enums.PrioridadeChat;
 import com.example.enums.StatusChat;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 public record DadosListagemChat(
         Integer id,
@@ -11,8 +11,8 @@ public record DadosListagemChat(
         Integer especialistaId,
         StatusChat status,
         PrioridadeChat prioridade,
-        LocalTime entrouEm,
-        LocalTime encerradoEm
+        LocalDate entrouEm,
+        LocalDate encerradoEm
 ) {
     public DadosListagemChat(Chat chat) {
         this(

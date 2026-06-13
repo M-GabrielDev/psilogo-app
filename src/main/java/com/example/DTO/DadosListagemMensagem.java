@@ -7,6 +7,7 @@ import java.time.LocalTime;
 public record DadosListagemMensagem(
         Integer id,
         Integer autorId,
+        Integer chatId,
         String anonimo,
         String conteudoTexto,
         TipoMidia tipoMidia,
@@ -18,6 +19,7 @@ public record DadosListagemMensagem(
         this(
                 m.getId(),
                 m.getAutor().getId(),
+                m.getChat().getId(),
                 m.getAutor().getAnonimo(),
                 m.getConteudoTexto(),
                 m.getTipoMidia(),

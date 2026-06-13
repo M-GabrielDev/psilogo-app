@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "autenticacao_token")
@@ -26,16 +27,16 @@ public class AutenticacaoToken {
     private String token;
 
     @Column(name = "expira_em", nullable = false)
-    private LocalDateTime expiraEm;
+    private LocalTime expiraEm;
 
     @Column(name = "usado_em")
-    private LocalDateTime usadoEm;
+    private LocalDate usadoEm;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuarios_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    public AutenticacaoToken(Usuario usuario, String token, Integer tipo, LocalDateTime expiraEm) {
+    public AutenticacaoToken(Usuario usuario, String token, Integer tipo, LocalTime expiraEm) {
         this.usuario  = usuario;
         this.token    = token;
         this.tipo     = tipo;
@@ -43,6 +44,6 @@ public class AutenticacaoToken {
     }
 
     public void marcarComoUsado() {
-        this.usadoEm = LocalDateTime.now();
+        this.usadoEm = LocalDate.now();
     }
 }

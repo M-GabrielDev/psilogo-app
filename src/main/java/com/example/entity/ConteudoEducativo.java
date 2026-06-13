@@ -19,6 +19,7 @@ public class ConteudoEducativo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_conteudo")
     private Integer id;
 
     @Column(nullable = false, length = 200)

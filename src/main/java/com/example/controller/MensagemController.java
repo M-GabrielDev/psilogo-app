@@ -29,6 +29,10 @@ public class MensagemController {
     public Page<DadosListagemMensagem> listar(Pageable pageable) {
         return service.listar(pageable);
     }
+    @GetMapping("/por-chat/{chatId}")
+    public List<DadosListagemMensagem> listarPorChat(@PathVariable Integer chatId) {
+        return service.listarPorChat(chatId);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Integer id) {
