@@ -36,6 +36,12 @@ public class ChatController {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
+    @GetMapping("/por-especialista/{especialistaId}")
+    public List<DadosListagemChat> listarPorEspecialista(
+            @PathVariable Integer especialistaId) {
+        return service.listarPorEspecialista(especialistaId);
+    }
+
     @PutMapping("/{id}/encerrar")
     public ResponseEntity<DadosListagemChat> encerrar(
             @PathVariable Integer id) {

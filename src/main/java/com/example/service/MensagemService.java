@@ -48,6 +48,7 @@ public class MensagemService {
         mensagemRepository.save(mensagem);
     }
 
+    @Transactional
     public List<DadosListagemMensagem> listarPorChat(Integer chatId) {
         return mensagemRepository.findByChatId(chatId)
                 .stream()

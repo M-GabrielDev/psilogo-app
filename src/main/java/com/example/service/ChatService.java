@@ -47,6 +47,14 @@ public class ChatService {
     }
 
     @Transactional
+    public List<DadosListagemChat> listarPorEspecialista(Integer especialistaId) {
+        return chatRepository.findByEspecialistaId(especialistaId)
+                .stream()
+                .map(DadosListagemChat::new)
+                .toList();
+    }
+
+    @Transactional
     public DadosListagemChat encerrar(Integer id) {
         Chat chat = chatRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Chat"));
