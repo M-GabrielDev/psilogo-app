@@ -29,8 +29,19 @@ public class ChatService {
     public DadosListagemChat cadastrar(DadosCadastroChat dados) {
         Usuario usuario = usuarioRepository.findById(dados.usuarioId())
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário"));
-        Especialista especialista = especialistaRepository.findById(dados.especialistaId())
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Especialista"));
+
+        Especialista especialista;
+        if (dados.especialistaId() != null) {
+            especialista = especialistaRepository.findById(dados.especialistaId())
+                    .orElseThrow(() -> new RecursoNaoEncontradoException("Especialista"));
+        } else {
+            List<Especialista> disponiveis = especialistaRepository.findByDisponivelTrue();
+            if (disponiveis.isEmpty()) {
+                throw new RecursoNaoEncontradoException("Nenhum especialista disponível");
+            }
+            especialista = disponiveis.get(0);
+        }
+
         Chat chat = new Chat(dados, usuario, especialista);
         return new DadosListagemChat(chatRepository.save(chat));
     }

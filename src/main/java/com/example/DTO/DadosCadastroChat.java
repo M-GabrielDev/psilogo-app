@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DadosCadastroChat(
         @NotNull Integer usuarioId,
-        @NotNull Integer especialistaId,
+        Integer especialistaId,
         PrioridadeChat prioridade
 ) {}
